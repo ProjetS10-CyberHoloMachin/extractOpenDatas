@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using RestSharp;
 
 namespace ConsoleApp1
@@ -84,9 +82,7 @@ namespace ConsoleApp1
         }
 
         public static List<String> GetSallesLibres()
-        {
-            List<String> res = new List<String>();
-            
+        {         
             DateTime currentDate = DateTime.UtcNow;
             
             var client =
