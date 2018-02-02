@@ -1,17 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ConsoleApp1
 {
-    class Hello 
+    class MainClass 
     {
         static void Main()
         {
-            dynamic[] cours = CoursAde.GetNext();
+            List<String> cours = CoursAde.GetSallesLibres();
             foreach(var item in cours)
             {
-                Console.WriteLine(item.ToString());
+                Console.WriteLine(item);
             }
-            
         }
     }
 }
