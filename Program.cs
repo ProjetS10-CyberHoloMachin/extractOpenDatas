@@ -7,11 +7,19 @@ namespace ConsoleApp1
     {
         static void Main()
         {
-            List<String> cours = CoursAde.GetSallesLibres();
-            foreach(var item in cours)
+            dynamic[] cours = CoursAde.GetNext();
+
+            foreach (var item in cours)
             {
                 Console.WriteLine(item);
             }
+
+
+//            List<String> cours = CoursAde.GetSallesLibres();
+//            foreach(var item in cours)
+//            {
+//                Console.WriteLine(item);
+//            }
         }
     }
 }

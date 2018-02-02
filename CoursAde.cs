@@ -18,15 +18,33 @@ namespace ConsoleApp1
                 Convert.ToInt32(raw.Substring(13,2))
             );
         }
+        
+        private static String FormatDate(DateTime date)
+        {
+            String res = date.Year+"-";
+            if (date.Month < 10)
+            {
+                res += "0";
+            }
+            res += date.Month+"-";
+            if (date.Day< 10)
+            {
+                res += "0";
+            }
+            res += date.Day;
+            return res;
+        }
 
         public static dynamic[] GetNext() {
+            
+            
             var client = new RestClient("http://ade6-ujf-ro.grenet.fr/jsp/custom/modules/plannings/anonymous_cal.jsp");
             var request = new RestRequest("", Method.GET);
             request.AddParameter("resources", 11491);
             request.AddParameter("projectId", 2);
             request.AddParameter("calType", "ical");
-            request.AddParameter("firstDate", "2018-01-29");
-            request.AddParameter("lastDate", "2018-02-04");
+            request.AddParameter("firstDate", FormatDate(DateTime.Today.AddDays(-1 * (int)DateTime.Today.DayOfWeek +1)));
+            request.AddParameter("lastDate", FormatDate(DateTime.Today.AddDays(-1 * (int)DateTime.Today.DayOfWeek +5)));
             
             // execute the request
             IRestResponse response = client.Execute(request);
@@ -65,11 +83,11 @@ namespace ConsoleApp1
             return nextRoom;
         }
 
-        
-
         public static List<String> GetSallesLibres()
         {
             List<String> res = new List<String>();
+            
+            DateTime currentDate = DateTime.UtcNow;
             
             var client =
                 new RestClient("http://ade6-ujf-ro.grenet.fr/jsp/custom/modules/plannings/anonymous_cal.jsp");
@@ -77,8 +95,8 @@ namespace ConsoleApp1
             request.AddParameter("resources", "13902,11084,11081,12036,12035,12034,11444,11429,11426,11351,11951,11949,11486,11598,11468,11467,11466,10552,11183,11169,10579,11493,11171,10545,10544,10527,10641,10536,10535,10534,10533,10532,12214,10543,10539,10538,10537,10507,10494,10493,3544,10531,10530,10529,10528,10526,10525,10524,10523,10522,10521,10518,10546,10496,10495,10551,10550,10548,10547,10506,10488,10487,10517");
             request.AddParameter("projectId", 2);
             request.AddParameter("calType", "ical");
-            request.AddParameter("firstDate", "2018-01-29");
-            request.AddParameter("lastDate", "2018-02-04");
+            request.AddParameter("firstDate", FormatDate(currentDate));
+            request.AddParameter("lastDate", FormatDate(currentDate));
             
             IRestResponse response = client.Execute(request);
             
@@ -124,9 +142,7 @@ namespace ConsoleApp1
                     DateTime dateStart = RawToDate(rawDateStart);
                     string rawDateEnd = c.Split("DTEND:")[1].Split("\n")[0];
                     DateTime dateEnd = RawToDate(rawDateEnd);
-                                    
-                    DateTime currentDate = DateTime.UtcNow;
-                                    
+                    
                     if ((dateStart - currentDate).TotalSeconds < 0 & (dateEnd - currentDate).TotalSeconds > 0)
                     {
                         foreach (var s in c.Split("LOCATION:")[1].Split("DESCRIPTION")[0].Replace(Environment.NewLine + " ","").Replace(Environment.NewLine,"").Replace("  "," ").Split("\\,"))
