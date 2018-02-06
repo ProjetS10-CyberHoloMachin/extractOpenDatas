@@ -7,19 +7,30 @@ namespace ConsoleApp1
     {
         static void Main()
         {
-            dynamic[] cours = CoursAde.GetNext();
+            /*
+             *  Le prochain cours
+             */
+//            dynamic[] coursNext = CoursAde.GetNext();
+//            foreach (var item in coursNext)
+//            {
+//                Console.WriteLine(item);
+//            }
 
-            foreach (var item in cours)
+            /*
+             *  La liste des salles vides
+             */
+//            List<String> coursLibres = CoursAde.GetSallesLibres();
+//            foreach(var item in coursLibres)
+//            {
+//                Console.WriteLine(item);
+//            }
+
+            List<String> menus = Barnave.GetMenus();
+            foreach(var item in menus)
             {
                 Console.WriteLine(item);
             }
 
-
-//            List<String> cours = CoursAde.GetSallesLibres();
-//            foreach(var item in cours)
-//            {
-//                Console.WriteLine(item);
-//            }
         }
     }
 }

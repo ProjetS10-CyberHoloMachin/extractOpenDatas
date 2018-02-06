@@ -33,9 +33,8 @@ namespace ConsoleApp1
             return res;
         }
 
-        public static dynamic[] GetNext() {
-            
-            
+        public static dynamic[] GetNext()
+        {    
             var client = new RestClient("http://ade6-ujf-ro.grenet.fr/jsp/custom/modules/plannings/anonymous_cal.jsp");
             var request = new RestRequest("", Method.GET);
             request.AddParameter("resources", 11491);
@@ -50,7 +49,7 @@ namespace ConsoleApp1
             var cours = response.Content.Split("BEGIN:VEVENT");
 
             // set the result as an empty room (nom, debut, fin, salle)
-            var nextRoom = new dynamic[] {"",new DateTime(),new DateTime(),""};
+            var nextRoom = new dynamic[] {"AUCUN COURS",new DateTime(),new DateTime(),""};
             
             // get current date and time
             DateTime currentDate = DateTime.UtcNow;
@@ -64,7 +63,7 @@ namespace ConsoleApp1
                 
                 if ((date - currentDate).TotalSeconds > 0)
                 {
-                    if ((date - currentDate).TotalSeconds < (nextRoom[2] - currentDate).TotalSeconds | nextRoom[0] == "")
+                    if ((date - currentDate).TotalSeconds < (nextRoom[2] - currentDate).TotalSeconds | nextRoom[0] == "AUCUN COURS")
                     {
                         nextRoom[0] = cours[i].Split("SUMMARY:")[1].Split("\n")[0];
                         nextRoom[1] = RawToDate(cours[i].Split("DTSTART:")[1].Split("\n")[0]);
@@ -98,7 +97,7 @@ namespace ConsoleApp1
             
             var cours = response.Content.Split("BEGIN:VEVENT");
 
-            List<String> listeSalles = new List<String>()
+            List<String> listeSalles = new List<String>
             {
                 "PG AMPHI 001 (122 pl.)",
                 "PG AMPHI 005 (58 pl.)",
